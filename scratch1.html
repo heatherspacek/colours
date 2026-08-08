@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+            /* display: block; */
+            /* --col-light-var1: oklch(from); */
+        }
+
+        html {
+            --col-light-base: #88c0d0;
+            --lighten-mod1: 15;
+            --col-modified: lch(from var(--col-light-base) calc(l + var(--lighten-mod1)) c h);
+        }
+
+        body {
+            /* display: flex; */
+        }
+
+        .sidebar {
+            position: absolute;
+            display: block;
+            width: 15rem;
+            background-color: rgb(184, 182, 182);
+            height: 100%;
+            box-shadow: 0.5rem 0rem;
+        }
+
+        .testcontainer {
+            position: absolute;
+            left: 15rem;
+            y: 0;
+            width: auto;
+            height: 100%;
+            display: block;
+        }
+
+        .tester {
+            display: block;
+            border: 1px solid black;
+            border-radius: 1rem;
+            background-color: var(--col-light-base);
+            min-height: 5rem;
+            min-width: 7rem;
+            margin: 1rem;
+            padding: 1rem;
+        }
+
+        .colorselector {
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+            background-color: var(--col-light-base);
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Color Pallete Tester</h2>
+        Base color 1:
+        <!-- <input type="color" oninput="document.documentElement.style.setProperty('--col-light-base', this.value);"> -->
+        <div class="colorselector"></div>
+        <br>
+        Color Interval:<input type="range" min="0" max="15"
+            oninput="document.documentElement.style.setProperty('--lighten-mod1', this.value);">
+    </div>
+    <div class="testcontainer">
+        <div class="tester">
+            Text123
+            <div class="tester" style="background-color: var(--col-modified);">
+                More text?!
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    var parent = document.querySelector(".colorselector")
+    var picker = new Picker({ parent: parent, alpha: false, popup: "bottom", });
+    picker.onChange = function (color) {
+        document.documentElement.style.setProperty("--col-light-base", color.rgbaString);
+    };
+</script>
+
+</html>
